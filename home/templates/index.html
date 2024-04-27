@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Tauri&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Tauri", sans-serif;
+}
+html, body{
+    width: 100%;
+    height: 100%;
+}
+
+/* Nav Start  */
+.nav{
+    display: flex;
+    height: 100px;
+    /* border: 2px solid black; */
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4%;
+}
+.nav-items{
+    display: flex;
+    width: 40vw;
+    align-items: center;
+    justify-content: space-around;
+}
+.nav-items a{
+    text-decoration: none;
+    color: black;
+}
+.btns{
+    border: 1px solid black;
+    background-color: transparent;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin: 0 10px;
+}
+#login-btn,#signup-btn{
+    cursor: pointer;
+}
+/* Nav End  */
+
+/* Home Start */
+.banner{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+}
+.home-container{
+    display: flex;
+    margin: 0 4%;
+}
+.home-text{
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+    width: 50%;
+}
+.red-text {
+    color: red;
+    font-size: 2.4vh;
+    text-transform: uppercase;
+}
+.main-text h1 {
+    margin-top: 3px;
+    font-size: 12vh;
+    line-height: 1;
+}
+.normal-text {
+    color: #706f6f; /* Example color */
+}
+.home-img img{
+    height: 84vh;
+}
+.getStarted{
+    margin-top: 10px;
+}
+.getStarted button{
+    background-color: #F2994A;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+  /*  category*/
+  .category{
+    margin-top: 10rem;
+    /* padding: 5rem; */
+    height: 80vh;
+    width: auto;
+  }
+  
+  .category h5,.category h1{
+    text-align: center;
+}
+.category h5{
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #555555;
+}
+.category h1{
+    font-size: 3rem;
+      margin-bottom: 4rem
+
+  }
+  .card-container{
+      height: 16.5rem;
+      display: flex;
+      justify-content: space-evenly;
+  }
+  .card{
+    height: 100%;
+    width: 18%;
+    /* background-color: #ffffff; */
+    position: relative;
+    padding: 20px;
+    border-radius: 10%;
+    box-shadow: 1px 1px 10px #555555;
+    transition: 0.3s ease all;
+    cursor: pointer;
+}
+.card:hover{
+    transform: scale(1.1);
+}
+  .card img{
+    position: absolute;
+    height: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    /* margin-top: 1rem; */
+    width: auto;
+  }
+  .card .text-content{
+    position: absolute;
+    bottom:  5%;
+    padding: 0 10px;
+  }
+  /* Category end*/
+  /* Guidence */
+  .guidence{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4vw;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .steps-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .steps{
+    display: flex;
+    margin-top: 4rem;
+    align-items: center;
+  }
+  .steps img{
+    margin-right: 20px;
+  }
+  .steps p{
+    width: 60%;
+  }
+  .steps p{
+    color: #706f6f;
+  }
+  .steps h3{
+    color: #555555;
+  }
+</style>
+<body>
+    <!-- Home Start -->
+    <div class="home">
+        <!-- Navbar Start  -->
+        <div class="nav">
+            <div class="logo">
+                <h1>RouteEase</h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-items">
+                    <a href="">Home</a>
+                    <a href="">Category</a>
+                    <a href="">Guidance</a>
+                    <a href="">About Us</a>
+                </ul>
+            </nav>
+            <div>
+                <button id="login-btn" class="btns">Login</button>
+                <button id="signup-btn" class="btns">Sign up</button>
+            </div>
+        </div>
+        <img class="banner" src="Images/banner.svg" alt="">
+        <!-- Navbar End -->
+        <div class="home-container">
+            <div class="home-text">
+                <div class="red-text">Best Guidance Around the World</div>
+                <div class="main-text">
+                    <h1>Travel, enjoy and live a new and full life</h1>
+                </div>
+                <div class="normal-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis atque
+                    voluptas blanditiis quisquam, distinctio sed natus. Quasi ipsam minus nulla voluptates autem
+                    architecto adipisci nemo quas doloremque voluptatibus.</div>
+                <div class="getStarted"><button>Get Started</button></div>
+            </div>
+            <div class="home-img">
+                <img src="Images/home.svg" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- Home End -->
+    <!-- Category -->
+    <div class="category">
+        <h5>CATEGORY</h5>
+        <h1>We Offer Best Services</h1>
+        <div class="card-container">
+            <div class="card">
+                <img src="./Images/dish.svg" alt="">
+                <div class="text-content">
+                    <h4>Calculated Weather</h4>
+                    <p>Built Wicket Longer admire do barton vanity itself do in it.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./Images/Flight.svg" alt="">
+                <div class="text-content">
+                    <h4>Best Flights</h4>
+                    <p>Engrossed listening. Park gate sell they west hard for the.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./Images/mic.svg" alt="">
+                <div class="text-content">
+                    <h4>Local Events</h4>
+                    <p>Barton vanity itself do in it. Preferd to men it engrossed listening.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./Images/custom.svg" alt="">
+                <div class="text-content">
+                    <h4>Customization</h4>
+                    <p>We deliver outsourced aviation services for military customers</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Category end -->
+    <!-- guidence -->
+    <div class="guidence">
+        <div class="left">
+            <p>Easy and Fast</p>
+            <h1>Book Your Next Trip In 3 Easy Steps</h1>
+           <div class="steps-container">
+            <div class="steps">
+                <img src="./Images/step-img(1).svg" alt="">
+                <div class="step-text">
+                    <h3>Choose Destination</h3>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque modi eos odit.</p>
+                </div>
+            </div>
+            <div class="steps">
+                <img src="./Images/step-img(2).svg" alt="">
+                <div class="step-text">
+                    <h3>Make payment</h3>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque modi eos odit.</p>
+                </div>
+            </div>
+            <div class="steps">
+                <img src="./Images/step-img(3).svg" alt="">
+                <div class="step-text">
+                    <h3>Reach Airport on selected date</h5>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque modi eos odit.</p>
+                </div>
+            </div>
+           </div>
+        </div>
+        <div class="right">
+            <img src="./Images/side-img.svg" alt="">
+        </div>
+    </div>
+</body>
+
+</html>
