@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +9,25 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
     /* Custom CSS */
+    .banner{
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+    z-index: -1;
+}
+body{
+  overflow-y: hidden;
+}
     .signup-container {
-      max-width: 600px;
-      margin: 0 auto;
-      margin-top: 50px;
+      max-width: 1000px;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top:50%;
+      /* margin: 0 auto; */
+      margin-top: 20px;
       background-color: #f9f9f9;
       padding: 20px;
       border: 1px solid #ccc;
@@ -21,21 +37,32 @@
     }
     .logo-container {
       text-align: left;
-      margin-right: 30px; /* Add space between logo and form */
+      margin-right: 30px;
+      width: 40%;
+      word-wrap: break-word; /* Add space between logo and form */
     }
     .form-container {
       flex: 1; /* Allow form container to grow and fill remaining space */
     }
   </style>
 </head>
-<body>
+<body class="bg-success">
+  {% if messages %}
+            <div class="alert alert-dark alert-dismissible fade show" role="alert">
+                {% for message in messages %}
+                <strong>{{ message }}</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                {% endfor %}
+              </div>
+              {% endif %}
   <div class="container">
+    <img class="banner" src="{% static 'banner.svg' %}">
     <div class="signup-container">
       <div class="logo-container">
         <!-- Your logo here -->
-        <h1>Logo</h1>
-        <p>Sign in if you already have an account.</p>
-        <a href="#" class="btn btn-secondary">Sign In</a>
+        <h1>RouteEase</h1>
+        <h5>Login if you already have an account.</h5>
+        <a href="/loginpage/" class="btn mt-3 btn-success">Login</a>
       </div>
       <div class="form-container">
         <form class="signup-form">
@@ -52,8 +79,8 @@
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" placeholder="Password">
           </div>
-          <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
-          <p class="mt-3">Already have an account? <a href="/loginpage/">Login here</a></p>
+          <button type="submit" class="btn btn-primary  btn-block">Sign Up</button>
+          <!-- <p class="mt-3">Already have an account? <a href="/loginpage/">Login here</a></p> -->
         </form>
       </div>
     </div>

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -204,7 +205,7 @@ html, body{
                 <button id="signup-btn" class="btns">Sign up</button>
             </div>
         </div>
-        <img class="banner" src="Images/banner.svg" alt="">
+        <img class="banner" src="{% static 'banner.svg' %}">
         <!-- Navbar End -->
         <div class="home-container">
             <div class="home-text">
@@ -218,7 +219,7 @@ html, body{
                 <div class="getStarted"><button>Get Started</button></div>
             </div>
             <div class="home-img">
-                <img src="Images/home.svg" alt="">
+                <img src="{% static 'home.svg' %}" alt="">
             </div>
         </div>
     </div>
@@ -229,28 +230,28 @@ html, body{
         <h1>We Offer Best Services</h1>
         <div class="card-container">
             <div class="card">
-                <img src="./Images/dish.svg" alt="">
+                <img src="{% static 'dish.svg' %}" alt="">
                 <div class="text-content">
                     <h4>Calculated Weather</h4>
                     <p>Built Wicket Longer admire do barton vanity itself do in it.</p>
                 </div>
             </div>
             <div class="card">
-                <img src="./Images/Flight.svg" alt="">
+                <img src="{% static 'Flight.svg' %}" alt="">
                 <div class="text-content">
                     <h4>Best Flights</h4>
                     <p>Engrossed listening. Park gate sell they west hard for the.</p>
                 </div>
             </div>
             <div class="card">
-                <img src="./Images/mic.svg" alt="">
+                <img src="{% static 'mic.svg' %}" alt="">
                 <div class="text-content">
                     <h4>Local Events</h4>
                     <p>Barton vanity itself do in it. Preferd to men it engrossed listening.</p>
                 </div>
             </div>
             <div class="card">
-                <img src="./Images/custom.svg" alt="">
+                <img src=".{% static 'custom.svg' %}" alt="">
                 <div class="text-content">
                     <h4>Customization</h4>
                     <p>We deliver outsourced aviation services for military customers</p>
@@ -266,21 +267,21 @@ html, body{
             <h1>Book Your Next Trip In 3 Easy Steps</h1>
            <div class="steps-container">
             <div class="steps">
-                <img src="./Images/step-img(1).svg" alt="">
+                <img src="{% static 'step-img(1).svg' %}" alt="">
                 <div class="step-text">
                     <h3>Choose Destination</h3>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque modi eos odit.</p>
                 </div>
             </div>
             <div class="steps">
-                <img src="./Images/step-img(2).svg" alt="">
+                <img src="{% static 'step-img(2).svg' %}" alt="">
                 <div class="step-text">
                     <h3>Make payment</h3>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque modi eos odit.</p>
                 </div>
             </div>
             <div class="steps">
-                <img src="./Images/step-img(3).svg" alt="">
+                <img src="{% static 'step-img(3).svg' %}" alt="">
                 <div class="step-text">
                     <h3>Reach Airport on selected date</h5>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque modi eos odit.</p>
@@ -289,7 +290,7 @@ html, body{
            </div>
         </div>
         <div class="right">
-            <img src="./Images/side-img.svg" alt="">
+            <img src="{% static 'side-img.svg' %}" alt="">
         </div>
     </div>
 </body>

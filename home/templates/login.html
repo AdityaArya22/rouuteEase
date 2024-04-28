@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,11 +8,24 @@
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
+    .banner{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+}
+body{
+  overflow-y: hidden;
+}
     /* Custom CSS */
     .login-container {
       max-width: 600px;
-      margin: 0 auto;
-      margin-top: 50px;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top:50%;
+      /* margin: 0 auto; */
+      margin-top: 20px;
       background-color: #f9f9f9;
       padding: 20px;
       border: 1px solid #ccc;
@@ -28,7 +42,16 @@
     }
   </style>
 </head>
-<body>
+<body class="bg-success">
+  {% if messages %}
+            <div class="alert alert-dark alert-dismissible fade show" role="alert">
+                {% for message in messages %}
+                <strong>{{ message }}</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                {% endfor %}
+              </div>
+              {% endif %}
+  <img class="banner" src="{% static 'banner.svg' %}">
   <div class="container">
     <div class="login-container">
       <div class="form-container">
@@ -46,9 +69,10 @@
         </form>
       </div>
       <div class="signup-container">
+        <h1>RouteEase</h1>
         <h2>Don't have an account?</h2>
         <p>Create one now!</p>
-        <a href="/signuppage/" class="btn btn-secondary">Sign Up</a>
+        <a href="/signuppage/" class="btn btn-success">Sign Up</a>
       </div>
     </div>
   </div>

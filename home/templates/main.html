@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Finder</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Hotel Finder</h1>
+        <form id="hotelForm">
+            <div class="form-group">
+                <label for="currentLocation">Current Location:</label>
+                <input type="text" class="form-control" id="currentLocation" placeholder="Enter current location" required>
+            </div>
+            <div class="form-group">
+                <label for="destination">Destination:</label>
+                <input type="text" class="form-control" id="destination" placeholder="Enter destination" required>
+            </div>
+            <div class="form-group">
+                <label for="carType">Choose Car Type:</label>
+                <select class="form-control" id="carType" required>
+                    <option value="compact">Compact</option>
+                    <option value="suv">SUV</option>
+                    <option value="luxury">Luxury</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Find Hotels</button>
+        </form>
+
+        <div id="hotelResults" class="mt-4" style="display: none;">
+            <h2>Available Hotels:</h2>
+            <ul id="hotelList" class="list-group"></ul>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to fetch hotels using OpenStreetMap Nominatim API
+        function fetchHotels(currentLocation, destination) {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=hotel&bounded=1&viewbox=${currentLocation[1]},${currentLocation[0]},${destination[1]},${destination[0]}`;
+
+            return fetch(url)
+                .then(response => response.json())
+                .then(data => data)
+                .catch(error => console.error('Error fetching hotels:', error));
+        }
+
+        // Function to display hotels
+        function displayHotels(hotels) {
+            const hotelList = document.getElementById("hotelList");
+            hotelList.innerHTML = '';
+
+            hotels.forEach(hotel => {
+                const li = document.createElement("li");
+                li.className = "list-group-item";
+                
+                // Display hotel name
+                const hotelName = document.createElement("span");
+                hotelName.textContent = hotel.display_name;
+                li.appendChild(hotelName);
+
+                // Add button to copy hotel name
+                const copyButton = document.createElement("button");
+                copyButton.className = "btn btn-sm btn-secondary ml-2";
+                copyButton.textContent = "Copy Name";
+                copyButton.onclick = function() {
+                    copyToClipboard(hotel.display_name);
+                };
+                li.appendChild(copyButton);
+
+                hotelList.appendChild(li);
+            });
+        }
+
+        // Function to copy text to clipboard
+        function copyToClipboard(text) {
+            const el = document.createElement("textarea");
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand("copy");
+            document.body.removeChild(el);
+            alert("Hotel name copied to clipboard!");
+        }
+
+        // Form submission
+        document.getElementById("hotelForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const currentLocation = document.getElementById("currentLocation").value;
+            const destination = document.getElementById("destination").value;
+
+            // Geocode current location and destination
+            Promise.all([
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${currentLocation}`)
+                    .then(response => response.json())
+                    .then(data => [parseFloat(data[0].lat), parseFloat(data[0].lon)]),
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${destination}`)
+                    .then(response => response.json())
+                    .then(data => [parseFloat(data[0].lat), parseFloat(data[0].lon)])
+            ]).then(([currentLocationCoords, destinationCoords]) => {
+                fetchHotels(currentLocationCoords, destinationCoords)
+                    .then(hotels => {
+                        displayHotels(hotels);
+                        // Show hotel results
+                        document.getElementById("hotelResults").style.display = "block";
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
