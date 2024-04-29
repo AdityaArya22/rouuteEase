@@ -55,4 +55,27 @@ def loginpage(request):
 
     return render(request, "login.html") 
 def main(request):
-    return render(request,'main.html')
+    car_mileages = {
+        "Maruti Suzuki Swift": 22,
+        "Hyundai Grand i10": 19,
+        "Tata Tiago": 23,
+        "Maruti Suzuki Baleno": 21,
+        "Honda Amaze": 18,
+        "Hyundai Venue": 17,
+        "Mahindra Bolero": 15,
+        "Mahindra Thar": 15,
+        "Tata Nexon": 17,
+        "Toyota Innova Crysta": 13,
+        "Ford EcoSport": 18,
+        "Kia Sonet": 18,
+        "Renault Kwid": 22,
+        "Volkswagen Polo": 18,
+        "Maruti Suzuki Alto": 22,
+        "Mahindra Scorpio": 15,
+        "Tata Altroz": 21,
+        "Hyundai Creta": 16,
+        "Mahindra XUV300": 17,
+        "Honda City": 18,
+        # Add more cars here
+    }
+    return render(request, 'main.html', {'car_mileages': car_mileages})

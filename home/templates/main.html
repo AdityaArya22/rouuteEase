@@ -1,35 +1,115 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Finder</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Tauri", sans-serif;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Nav Start */
+        .nav {
+            display: flex;
+            height: 100px;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4%;
+        }
+
+        .nav-items {
+            display: flex;
+            width: 40vw;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .nav-items a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .btns {
+            border: 1px solid black;
+            background-color: transparent;
+            border-radius: 4px;
+            padding: 6px 12px;
+            margin: 0 10px;
+        }
+
+        #login-btn,
+        #signup-btn {
+            cursor: pointer;
+        }
+
+        /* Nav End */
+
+        /* Home Start */
+        .banner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: -1;
+            height: auto;
+        }
+    </style>
 </head>
+
 <body>
+    <div class="nav">
+        <div class="logo">
+            <h1>RouteEase</h1>
+        </div>
+        <nav class="nav">
+            <ul class="nav-items">
+                <a href="/main/">Home</a>
+                <a href="">Category</a>
+                <a href="">Guidance</a>
+                <a href="">About Us</a>
+            </ul>
+        </nav>
+    </div>
+    <img class="banner" src="{% static 'banner.svg' %}">
     <div class="container mt-5">
         <h1 class="text-center mb-4">Hotel Finder</h1>
+   
         <form id="hotelForm">
             <div class="form-group">
                 <label for="currentLocation">Current Location:</label>
-                <input type="text" class="form-control" id="currentLocation" placeholder="Enter current location" required>
+                <input type="text" class="form-control" id="currentLocation" placeholder="Enter current location"
+                    required>
             </div>
             <div class="form-group">
                 <label for="destination">Destination:</label>
                 <input type="text" class="form-control" id="destination" placeholder="Enter destination" required>
             </div>
             <div class="form-group">
-                <label for="carType">Choose Car Type:</label>
-                <select class="form-control" id="carType" required>
-                    <option value="compact">Compact</option>
-                    <option value="suv">SUV</option>
-                    <option value="luxury">Luxury</option>
+                <label for="car">Choose Car:</label>
+                <select class="form-control" id="car" required>
+                    <option value="">Select Car</option>
+                    {% for car, mileage in car_mileages.items %}
+                    <option value="{{ car }}">{{ car }} ({{ mileage }} km/l)</option>
+                    {% endfor %}
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Find Hotels</button>
         </form>
-
+        <div id="fuelCost" class="mb-4"></div> <!-
         <div id="hotelResults" class="mt-4" style="display: none;">
             <h2>Available Hotels:</h2>
             <ul id="hotelList" class="list-group"></ul>
@@ -42,77 +122,126 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        // Function to fetch hotels using OpenStreetMap Nominatim API
-        function fetchHotels(currentLocation, destination) {
-            const url = `https://nominatim.openstreetmap.org/search?format=json&q=hotel&bounded=1&viewbox=${currentLocation[1]},${currentLocation[0]},${destination[1]},${destination[0]}`;
+        // Define car mileage (km/l)
+        // Define car mileage (km/l)
+const carMileages = {
+    "Maruti Suzuki Swift": 22,
+    "Hyundai Grand i10": 19,
+    "Tata Tiago": 23,
+    "Maruti Suzuki Baleno": 21,
+    // Add more cars and their mileages here
+};
 
-            return fetch(url)
-                .then(response => response.json())
-                .then(data => data)
-                .catch(error => console.error('Error fetching hotels:', error));
-        }
+// Function to fetch hotels using OpenStreetMap Nominatim API
+function fetchHotels(currentLocation, destination) {
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=hotel&bounded=1&viewbox=${currentLocation[1]},${currentLocation[0]},${destination[1]},${destination[0]}`;
 
-        // Function to display hotels
-        function displayHotels(hotels) {
-            const hotelList = document.getElementById("hotelList");
-            hotelList.innerHTML = '';
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => data)
+        .catch(error => console.error('Error fetching hotels:', error));
+}
 
-            hotels.forEach(hotel => {
-                const li = document.createElement("li");
-                li.className = "list-group-item";
-                
-                // Display hotel name
-                const hotelName = document.createElement("span");
-                hotelName.textContent = hotel.display_name;
-                li.appendChild(hotelName);
+// Function to display hotels
+function displayHotels(hotels) {
+    const hotelList = document.getElementById("hotelList");
+    hotelList.innerHTML = '';
 
-                // Add button to copy hotel name
-                const copyButton = document.createElement("button");
-                copyButton.className = "btn btn-sm btn-secondary ml-2";
-                copyButton.textContent = "Copy Name";
-                copyButton.onclick = function() {
-                    copyToClipboard(hotel.display_name);
-                };
-                li.appendChild(copyButton);
+    hotels.forEach(hotel => {
+        const li = document.createElement("li");
+        li.className = "list-group-item";
 
-                hotelList.appendChild(li);
+        // Display hotel name
+        const hotelName = document.createElement("span");
+        hotelName.textContent = hotel.display_name;
+        li.appendChild(hotelName);
+
+        // Add button to copy hotel name
+        const copyButton = document.createElement("button");
+        copyButton.className = "btn btn-sm btn-secondary ml-2";
+        copyButton.textContent = "Copy Name";
+        copyButton.onclick = function () {
+            copyToClipboard(hotel.display_name);
+        };
+        li.appendChild(copyButton);
+
+        hotelList.appendChild(li);
+    });
+}
+
+// Function to copy text to clipboard
+function copyToClipboard(text) {
+    const el = document.createElement("textarea");
+    el.value = text;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+    alert("Hotel name copied to clipboard!");
+}
+
+// Function to calculate estimated fuel cost
+function calculateFuelCost(mileage, distance) {
+    const fuelPrice = 96; // Standard fuel price in ₹ per liter
+    const fuelConsumption = distance / mileage; // Liters of fuel consumed
+    const fuelCost = fuelConsumption * fuelPrice; // Total fuel cost in ₹
+    return fuelCost.toFixed(2);
+}
+
+// Function to calculate distance between two points using Haversine formula
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371e3; // Radius of Earth in meters
+    const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+    const φ2 = lat2 * Math.PI / 180;
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const d = R * c; // Distance in meters
+    return d;
+}
+
+// Form submission
+document.getElementById("hotelForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const currentLocation = document.getElementById("currentLocation").value;
+    const destination = document.getElementById("destination").value;
+    const selectedCar = document.getElementById("car").value;
+
+    // Geocode current location and destination
+    Promise.all([
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${currentLocation}`)
+            .then(response => response.json())
+            .then(data => [parseFloat(data[0].lat), parseFloat(data[0].lon)]),
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${destination}`)
+            .then(response => response.json())
+            .then(data => [parseFloat(data[0].lat), parseFloat(data[0].lon)])
+    ]).then(([currentLocationCoords, destinationCoords]) => {
+        const distance = calculateDistance(currentLocationCoords[0], currentLocationCoords[1], destinationCoords[0], destinationCoords[1]);
+        console.log('Distance:', distance);
+        
+        fetchHotels(currentLocationCoords, destinationCoords)
+            .then(hotels => {
+                displayHotels(hotels);
+                // Show hotel results
+                document.getElementById("hotelResults").style.display = "block";
             });
-        }
 
-        // Function to copy text to clipboard
-        function copyToClipboard(text) {
-            const el = document.createElement("textarea");
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand("copy");
-            document.body.removeChild(el);
-            alert("Hotel name copied to clipboard!");
-        }
+        // Calculate and display fuel cost
+        const fuelCostContainer = document.getElementById("fuelCost");
+        const selectedCarMileage = carMileages[selectedCar];
+        console.log('Selected car mileage:', selectedCarMileage);
+        const estimatedFuelCost = calculateFuelCost(selectedCarMileage, distance);
+        console.log('Estimated fuel cost:', estimatedFuelCost);
+        fuelCostContainer.innerHTML = `<p>Estimated Fuel Cost: ₹${estimatedFuelCost}</p>`;
+    });
+});
 
-        // Form submission
-        document.getElementById("hotelForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const currentLocation = document.getElementById("currentLocation").value;
-            const destination = document.getElementById("destination").value;
-
-            // Geocode current location and destination
-            Promise.all([
-                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${currentLocation}`)
-                    .then(response => response.json())
-                    .then(data => [parseFloat(data[0].lat), parseFloat(data[0].lon)]),
-                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${destination}`)
-                    .then(response => response.json())
-                    .then(data => [parseFloat(data[0].lat), parseFloat(data[0].lon)])
-            ]).then(([currentLocationCoords, destinationCoords]) => {
-                fetchHotels(currentLocationCoords, destinationCoords)
-                    .then(hotels => {
-                        displayHotels(hotels);
-                        // Show hotel results
-                        document.getElementById("hotelResults").style.display = "block";
-                    });
-            });
-        });
     </script>
 </body>
+
 </html>
