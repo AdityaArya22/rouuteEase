@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,7 +68,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="nav">
         <div class="logo">
@@ -102,14 +100,52 @@
                 <label for="car">Choose Car:</label>
                 <select class="form-control" id="car" required>
                     <option value="">Select Car</option>
-                    {% for car, mileage in car_mileages.items %}
-                    <option value="{{ car }}">{{ car }} ({{ mileage }} km/l)</option>
-                    {% endfor %}
+                    <option value="Maruti Suzuki Swift" data-mileage="22">Maruti Suzuki Swift (22 km/l)</option>
+                    <option value="Hyundai Grand i10" data-mileage="19">Hyundai Grand i10 (19 km/l)</option>
+                    <option value="Tata Tiago" data-mileage="23">Tata Tiago (23 km/l)</option>
+                    <option value="Maruti Suzuki Baleno" data-mileage="21">Maruti Suzuki Baleno (21 km/l)</option>
+                    <option value="Honda Amaze" data-mileage="18">Honda Amaze (18 km/l)</option>
+                    <option value="Hyundai Venue" data-mileage="17">Hyundai Venue (17 km/l)</option>
+                    <option value="Mahindra Bolero" data-mileage="15">Mahindra Bolero (15 km/l)</option>
+                    <option value="Mahindra Thar" data-mileage="15">Mahindra Thar (15 km/l)</option>
+                    <option value="Tata Nexon" data-mileage="17">Tata Nexon (17 km/l)</option>
+                    <option value="Toyota Innova Crysta" data-mileage="13">Toyota Innova Crysta (13 km/l)</option>
+                    <option value="Ford EcoSport" data-mileage="18">Ford EcoSport (18 km/l)</option>
+                    <option value="Kia Sonet" data-mileage="18">Kia Sonet (18 km/l)</option>
+                    <option value="Renault Kwid" data-mileage="22">Renault Kwid (22 km/l)</option>
+                    <option value="Volkswagen Polo" data-mileage="18">Volkswagen Polo (18 km/l)</option>
+                    <option value="Maruti Suzuki Alto" data-mileage="22">Maruti Suzuki Alto (22 km/l)</option>
+                    <option value="Mahindra Scorpio" data-mileage="15">Mahindra Scorpio (15 km/l)</option>
+                    <option value="Tata Altroz" data-mileage="21">Tata Altroz (21 km/l)</option>
+                    <option value="Hyundai Creta" data-mileage="16">Hyundai Creta (16 km/l)</option>
+                    <option value="Mahindra XUV300" data-mileage="17">Mahindra XUV300 (17 km/l)</option>
+                    <option value="Honda City" data-mileage="18">Honda City (18 km/l)</option>
+                    <!-- Additional Indian cars -->
+                    <option value="Maruti Suzuki Wagon R" data-mileage="21">Maruti Suzuki Wagon R (21 km/l)</option>
+                    <option value="Hyundai i20" data-mileage="20">Hyundai i20 (20 km/l)</option>
+                    <option value="Toyota Etios" data-mileage="16">Toyota Etios (16 km/l)</option>
+                    <option value="Ford Aspire" data-mileage="19">Ford Aspire (19 km/l)</option>
+                    <option value="Honda Jazz" data-mileage="19">Honda Jazz (19 km/l)</option>
+                    <option value="Renault Duster" data-mileage="16">Renault Duster (16 km/l)</option>
+                    <option value="Mahindra KUV100" data-mileage="17">Mahindra KUV100 (17 km/l)</option>
+                    <option value="Nissan Magnite" data-mileage="20">Nissan Magnite (20 km/l)</option>
+                    <option value="Volkswagen Vento" data-mileage="18">Volkswagen Vento (18 km/l)</option>
+                    <option value="Skoda Rapid" data-mileage="17">Skoda Rapid (17 km/l)</option>
+                    <option value="Tata Tigor" data-mileage="20">Tata Tigor (20 km/l)</option>
+                    <option value="Maruti Suzuki Ciaz" data-mileage="21">Maruti Suzuki Ciaz (21 km/l)</option>
+                    <option value="Hyundai Aura" data-mileage="20">Hyundai Aura (20 km/l)</option>
+                    <option value="Toyota Yaris" data-mileage="18">Toyota Yaris (18 km/l)</option>
+                    <option value="Ford Figo" data-mileage="19">Ford Figo (19 km/l)</option>
+                    <option value="Honda WR-V" data-mileage="17">Honda WR-V (17 km/l)</option>
+                    <option value="Renault Triber" data-mileage="20">Renault Triber (20 km/l)</option>
+                    <option value="Mahindra Marazzo" data-mileage="17">Mahindra Marazzo (17 km/l)</option>
+                    <option value="Tata Harrier" data-mileage="17">Tata Harrier (17 km/l)</option>
                 </select>
+                
             </div>
             <button type="submit" class="btn btn-primary">Find Hotels</button>
         </form>
-        <div id="fuelCost" class="mb-4"></div> <!-
+        <div id="fuelCost" class="mb-4"></div>
         <div id="hotelResults" class="mt-4" style="display: none;">
             <h2>Available Hotels:</h2>
             <ul id="hotelList" class="list-group"></ul>
@@ -122,126 +158,117 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        // Define car mileage (km/l)
-        // Define car mileage (km/l)
-const carMileages = {
-    "Maruti Suzuki Swift": 22,
-    "Hyundai Grand i10": 19,
-    "Tata Tiago": 23,
-    "Maruti Suzuki Baleno": 21,
-    // Add more cars and their mileages here
-};
+        // Function to fetch hotels using OpenStreetMap Nominatim API
+        function fetchHotels(currentLocation, destination) {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=hotel&bounded=1&viewbox=${currentLocation[1]},${currentLocation[0]},${destination[1]},${destination[0]}`;
 
-// Function to fetch hotels using OpenStreetMap Nominatim API
-function fetchHotels(currentLocation, destination) {
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=hotel&bounded=1&viewbox=${currentLocation[1]},${currentLocation[0]},${destination[1]},${destination[0]}`;
+            return fetch(url)
+                .then(response => response.json())
+                .then(data => data)
+                .catch(error => console.error('Error fetching hotels:', error));
+        }
 
-    return fetch(url)
-        .then(response => response.json())
-        .then(data => data)
-        .catch(error => console.error('Error fetching hotels:', error));
-}
+        // Function to display hotels
+        function displayHotels(hotels) {
+            const hotelList = document.getElementById("hotelList");
+            hotelList.innerHTML = '';
 
-// Function to display hotels
-function displayHotels(hotels) {
-    const hotelList = document.getElementById("hotelList");
-    hotelList.innerHTML = '';
+            hotels.forEach(hotel => {
+                const li = document.createElement("li");
+                li.className = "list-group-item";
 
-    hotels.forEach(hotel => {
-        const li = document.createElement("li");
-        li.className = "list-group-item";
+                // Display hotel name
+                const hotelName = document.createElement("span");
+                hotelName.textContent = hotel.display_name;
+                li.appendChild(hotelName);
 
-        // Display hotel name
-        const hotelName = document.createElement("span");
-        hotelName.textContent = hotel.display_name;
-        li.appendChild(hotelName);
+                // Add button to copy hotel name
+                const copyButton = document.createElement("button");
+                copyButton.className = "btn btn-sm btn-secondary ml-2";
+                copyButton.textContent = "Copy Name";
+                copyButton.onclick = function () {
+                    copyToClipboard(hotel.display_name);
+                };
+                li.appendChild(copyButton);
 
-        // Add button to copy hotel name
-        const copyButton = document.createElement("button");
-        copyButton.className = "btn btn-sm btn-secondary ml-2";
-        copyButton.textContent = "Copy Name";
-        copyButton.onclick = function () {
-            copyToClipboard(hotel.display_name);
-        };
-        li.appendChild(copyButton);
-
-        hotelList.appendChild(li);
-    });
-}
-
-// Function to copy text to clipboard
-function copyToClipboard(text) {
-    const el = document.createElement("textarea");
-    el.value = text;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-    alert("Hotel name copied to clipboard!");
-}
-
-// Function to calculate estimated fuel cost
-function calculateFuelCost(mileage, distance) {
-    const fuelPrice = 96; // Standard fuel price in ₹ per liter
-    const fuelConsumption = distance / mileage; // Liters of fuel consumed
-    const fuelCost = fuelConsumption * fuelPrice; // Total fuel cost in ₹
-    return fuelCost.toFixed(2);
-}
-
-// Function to calculate distance between two points using Haversine formula
-function calculateDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371e3; // Radius of Earth in meters
-    const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
-    const φ2 = lat2 * Math.PI / 180;
-    const Δφ = (lat2 - lat1) * Math.PI / 180;
-    const Δλ = (lon2 - lon1) * Math.PI / 180;
-
-    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-              Math.cos(φ1) * Math.cos(φ2) *
-              Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    const d = R * c; // Distance in meters
-    return d;
-}
-
-// Form submission
-document.getElementById("hotelForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-    const currentLocation = document.getElementById("currentLocation").value;
-    const destination = document.getElementById("destination").value;
-    const selectedCar = document.getElementById("car").value;
-
-    // Geocode current location and destination
-    Promise.all([
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${currentLocation}`)
-            .then(response => response.json())
-            .then(data => [parseFloat(data[0].lat), parseFloat(data[0].lon)]),
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${destination}`)
-            .then(response => response.json())
-            .then(data => [parseFloat(data[0].lat), parseFloat(data[0].lon)])
-    ]).then(([currentLocationCoords, destinationCoords]) => {
-        const distance = calculateDistance(currentLocationCoords[0], currentLocationCoords[1], destinationCoords[0], destinationCoords[1]);
-        console.log('Distance:', distance);
-        
-        fetchHotels(currentLocationCoords, destinationCoords)
-            .then(hotels => {
-                displayHotels(hotels);
-                // Show hotel results
-                document.getElementById("hotelResults").style.display = "block";
+                hotelList.appendChild(li);
             });
+        }
 
-        // Calculate and display fuel cost
-        const fuelCostContainer = document.getElementById("fuelCost");
-        const selectedCarMileage = carMileages[selectedCar];
-        console.log('Selected car mileage:', selectedCarMileage);
-        const estimatedFuelCost = calculateFuelCost(selectedCarMileage, distance);
-        console.log('Estimated fuel cost:', estimatedFuelCost);
-        fuelCostContainer.innerHTML = `<p>Estimated Fuel Cost: ₹${estimatedFuelCost}</p>`;
-    });
-});
+        // Function to copy text to clipboard
+        function copyToClipboard(text) {
+            const el = document.createElement("textarea");
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand("copy");
+            document.body.removeChild(el);
+            alert("Hotel name copied to clipboard!");
+        }
+
+        // Function to calculate estimated fuel cost
+        function calculateFuelCost(mileage, distance) {
+            const fuelPrice = 96; // Standard fuel price in ₹ per liter
+            const fuelConsumption = distance / mileage; // Liters of fuel consumed
+            const fuelCost = fuelConsumption * fuelPrice; // Total fuel cost in ₹
+            return fuelCost.toFixed(2);
+        }
+
+        // Function to calculate distance between two points using OpenStreetMap API
+        async function calculateDistance(lat1, lon1, lat2, lon2) {
+            const url = `https://router.project-osrm.org/route/v1/driving/${lon1},${lat1};${lon2},${lat2}?overview=false`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const distance = data.routes[0].distance; // Distance in meters
+                return distance;
+            } catch (error) {
+                console.error('Error calculating distance:', error);
+                throw error;
+            }
+        }
+
+        // Form submission
+        document.getElementById("hotelForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const currentLocation = document.getElementById("currentLocation").value;
+            const destination = document.getElementById("destination").value;
+            const selectedCar = document.getElementById("car").value;
+            const selectedCarMileage = parseFloat(document.getElementById("car").selectedOptions[0].dataset.mileage);
+
+            // Geocode current location and destination
+            try {
+                const currentLocationResponse = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${currentLocation}`);
+                const currentLocationData = await currentLocationResponse.json();
+                const currentLocationCoords = [parseFloat(currentLocationData[0].lat), parseFloat(currentLocationData[0].lon)];
+
+                const destinationResponse = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${destination}`);
+                const destinationData = await destinationResponse.json();
+                const destinationCoords = [parseFloat(destinationData[0].lat), parseFloat(destinationData[0].lon)];
+
+                const distance = await calculateDistance(currentLocationCoords[0], currentLocationCoords[1], destinationCoords[0], destinationCoords[1]);
+                console.log('Distance (meters):', distance);
+
+                // Convert distance to kilometers
+                const distanceKms = distance / 1000;
+                console.log('Distance (kms):', distanceKms);
+                
+                const hotels = await fetchHotels(currentLocationCoords, destinationCoords);
+                displayHotels(hotels);
+                document.getElementById("hotelResults").style.display = "block";
+
+                console.log('Selected car:', selectedCar);
+                console.log('Selected car mileage:', selectedCarMileage);
+                
+                const estimatedFuelCost = calculateFuelCost(selectedCarMileage, distanceKms);
+                console.log('Estimated fuel cost:', estimatedFuelCost);
+                document.getElementById("fuelCost").innerHTML = `<p>Estimated Fuel Cost: ₹${estimatedFuelCost}</p>`;
+            } catch (error) {
+                console.error('Error processing form submission:', error);
+            }
+        });
 
     </script>
 </body>
-
 </html>

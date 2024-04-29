@@ -6,6 +6,24 @@ from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.models import User
  
 # Create your views here.
+from django.http import JsonResponse
+
+# Function to calculate estimated fuel cost
+def calculate_fuel_cost(request):
+    if request.method == 'GET':
+        distance = request.GET.get('distance')
+        selected_car = request.GET.get('car').strip()
+
+        # Get selected car's mileage
+        selected_car_mileage = car_mileages.get(selected_car)
+
+        # Calculate estimated fuel cost
+        if selected_car_mileage is not None:
+            estimated_fuel_cost = calculate_fuel_cost(selected_car_mileage, float(distance))
+            return JsonResponse({'estimated_fuel_cost': estimated_fuel_cost})
+        else:
+            return JsonResponse({'error': 'Invalid car selected'}, status=400)
+
 def home(request):
     return render(request,'index.html')
 def signuppage(request):
@@ -54,8 +72,7 @@ def loginpage(request):
             return redirect('/home/')
 
     return render(request, "login.html") 
-def main(request):
-    car_mileages = {
+car_mileages = {
         "Maruti Suzuki Swift": 22,
         "Hyundai Grand i10": 19,
         "Tata Tiago": 23,
@@ -78,4 +95,6 @@ def main(request):
         "Honda City": 18,
         # Add more cars here
     }
+def main(request):
+    
     return render(request, 'main.html', {'car_mileages': car_mileages})
