@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Custom CSS -->
     <style>
+.loader {
+        /* animation: spin 2s linear infinite; */
+        margin: 30px 0; /* Center the loader */
+        display: none; /* Initially hide the loader */
+        
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
         * {
             margin: 0;
             padding: 0;
@@ -68,6 +80,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="nav">
         <div class="logo">
@@ -85,7 +98,7 @@
     <img class="banner" src="{% static 'banner.svg' %}">
     <div class="container mt-5">
         <h1 class="text-center mb-4">Hotel Finder</h1>
-   
+
         <form id="hotelForm">
             <div class="form-group">
                 <label for="currentLocation">Current Location:</label>
@@ -141,10 +154,11 @@
                     <option value="Mahindra Marazzo" data-mileage="17">Mahindra Marazzo (17 km/l)</option>
                     <option value="Tata Harrier" data-mileage="17">Tata Harrier (17 km/l)</option>
                 </select>
-                
+
             </div>
             <button type="submit" class="btn btn-primary">Find Hotels</button>
         </form>
+        <div class="loader" id="loader">Loading</div>
         <div id="fuelCost" class="mb-4"></div>
         <div id="hotelResults" class="mt-4" style="display: none;">
             <h2>Available Hotels:</h2>
@@ -232,6 +246,7 @@
         // Form submission
         document.getElementById("hotelForm").addEventListener("submit", async function (event) {
             event.preventDefault();
+            document.getElementById("loader").style.display = "block";
             const currentLocation = document.getElementById("currentLocation").value;
             const destination = document.getElementById("destination").value;
             const selectedCar = document.getElementById("car").value;
@@ -253,22 +268,26 @@
                 // Convert distance to kilometers
                 const distanceKms = distance / 1000;
                 console.log('Distance (kms):', distanceKms);
-                
+
                 const hotels = await fetchHotels(currentLocationCoords, destinationCoords);
                 displayHotels(hotels);
                 document.getElementById("hotelResults").style.display = "block";
 
                 console.log('Selected car:', selectedCar);
                 console.log('Selected car mileage:', selectedCarMileage);
-                
+
                 const estimatedFuelCost = calculateFuelCost(selectedCarMileage, distanceKms);
                 console.log('Estimated fuel cost:', estimatedFuelCost);
                 document.getElementById("fuelCost").innerHTML = `<p>Estimated Fuel Cost: ₹${estimatedFuelCost}</p>`;
             } catch (error) {
                 console.error('Error processing form submission:', error);
-            }
+            }finally {
+        // Hide loader after form submission is complete or error occurred
+        document.getElementById("loader").style.display = "none";
+    }
         });
 
     </script>
 </body>
+
 </html>
